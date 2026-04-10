@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #2563eb;
+      --blue-dark: #1d4ed8;
+      --red: #dc2626;
+      --red-light: #fef2f2;
+      --green: #16a34a;
+      --green-light: #f0fdf4;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-400: #9ca3af;
+      --gray-600: #4b5563;
+      --gray-900: #111827;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--gray-50);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+      padding: 0 2rem;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      color: var(--blue);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a {
+      font-size: 14px;
+      color: var(--gray-600);
+      text-decoration: none;
+    }
+    .nav-links a:hover { color: var(--blue); }
+
+    /* PAGE */
+    .page {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem 1rem;
+    }
+
+    /* CARD */
+    .card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 460px;
+      padding: 2.5rem 2rem;
+    }
+    .card-head { text-align: center; margin-bottom: 2rem; }
+    .card-head h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      color: var(--gray-900);
+      margin-bottom: 6px;
+    }
+    .card-head p { font-size: 14px; color: var(--gray-400); }
+
+    /* FORM */
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .field { display: flex; flex-direction: column; margin-bottom: 14px; }
+    .field label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--gray-600);
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .field input {
+      height: 42px;
+      padding: 0 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: var(--gray-900);
+      background: var(--white);
+      border: 1.5px solid var(--gray-200);
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .field input::placeholder { color: var(--gray-400); }
+    .field input:focus { border-color: var(--blue); }
+    .field input.ok { border-color: var(--green); }
+    .field input.bad { border-color: var(--red); background: var(--red-light); }
+
+    .err {
+      display: none;
+      font-size: 11.5px;
+      color: var(--red);
+      margin-top: 4px;
+    }
+    .err.show { display: block; }
+
+    /* BUTTON */
+    .btn {
+      width: 100%;
+      height: 44px;
+      background: var(--blue);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn:hover { background: var(--blue-dark); }
+    .btn:active { transform: scale(0.98); }
+
+    .login-txt {
+      text-align: center;
+      font-size: 13px;
+      color: var(--gray-400);
+      margin-top: 14px;
+    }
+    .login-txt a { color: var(--blue); text-decoration: none; }
+
+    /* SUCCESS */
+    .success {
+      display: none;
+      text-align: center;
+      padding: 1rem 0;
+    }
+    .success.show { display: block; }
+    .tick {
+      width: 60px; height: 60px;
+      background: var(--green-light);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1rem;
+    }
+    .tick svg { width: 28px; height: 28px; stroke: var(--green); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .success h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 22px;
+      color: var(--gray-900);
+      margin-bottom: 6px;
+    }
+    .success p { font-size: 14px; color: var(--gray-400); margin-bottom: 1.25rem; }
+    .reset-btn {
+      font-size: 13px;
+      color: var(--blue);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--white);
+      border-top: 1px solid var(--gray-200);
+      padding: 1rem 2rem;
+      text-align: center;
+      font-size: 12px;
+      color: var(--gray-400);
+    }
+    footer a { color: var(--gray-400); text-decoration: none; margin: 0 8px; }
+    footer a:hover { color: var(--blue); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="#">Nexora</a>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Sign in</a>
+    </div>
+  </nav>
+
+  <div class="page">
+    <div class="card">
+      <div class="card-head">
+        <h1>Create Account</h1>
+        <p>Fill in the details below to get started.</p>
+      </div>
+
+      <div id="form-section">
+        <div class="row">
+          <div class="field">
+            <label>First Name</label>
+            <input type="text" id="fname" placeholder="Min. 6 letters">
+            <span class="err" id="err-fname">Min. 6 alphabetic characters only.</span>
+          </div>
+          <div class="field">
+            <label>Last Name</label>
+            <input type="text" id="lname" placeholder="Your last name">
+            <span class="err" id="err-lname">Last name cannot be empty.</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Email Address</label>
+          <input type="text" id="email" placeholder="name@domain.com">
+          <span class="err" id="err-email">Enter a valid email (name@domain.com).</span>
+        </div>
+
+        <div class="field">
+          <label>Mobile Number</label>
+          <input type="text" id="mobile" placeholder="10-digit number">
+          <span class="err" id="err-mobile">Enter exactly 10 digits, no letters.</span>
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="password" placeholder="Min. 6 characters">
+          <span class="err" id="err-password">Password must be at least 6 characters.</span>
+        </div>
+
+        <div class="field">
+          <label>Address</label>
+          <input type="text" id="address" placeholder="Your full address">
+          <span class="err" id="err-address">Address cannot be empty.</span>
+        </div>
+
+        <button class="btn" onclick="validate()">Register</button>
+        <p class="login-txt">Already have an account? <a href="#">Sign in</a></p>
+      </div>
+
+      <div class="success" id="success">
+        <div class="tick">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h2>Registration Successful!</h2>
+        <p>Your account has been created.<br>Welcome aboard.</p>
+        <button class="reset-btn" onclick="reset()">Register another account</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2026 Nexora Inc.
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Help</a>
+  </footer>
+
+  <script>
+    function setErr(id, isInvalid) {
+      const input = document.getElementById(id);
+      const err   = document.getElementById('err-' + id);
+      input.classList.toggle('bad', isInvalid);
+      input.classList.toggle('ok',  !isInvalid);
+      err.classList.toggle('show', isInvalid);
+      return isInvalid;
+    }
+
+    function validate() {
+      const fname    = document.getElementById('fname').value.trim();
+      const lname    = document.getElementById('lname').value.trim();
+      const email    = document.getElementById('email').value.trim();
+      const mobile   = document.getElementById('mobile').value.trim();
+      const password = document.getElementById('password').value;
+      const address  = document.getElementById('address').value.trim();
+
+      let hasErr = false;
+
+      // First Name: only alphabets, min 6
+      hasErr = setErr('fname',    !/^[A-Za-z]{6,}$/.test(fname))    || hasErr;
+      // Last Name: not empty
+      hasErr = setErr('lname',    lname === '')                       || hasErr;
+      // Email: standard pattern
+      hasErr = setErr('email',    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) || hasErr;
+      // Mobile: exactly 10 digits
+      hasErr = setErr('mobile',   !/^\d{10}$/.test(mobile))          || hasErr;
+      // Password: min 6 chars
+      hasErr = setErr('password', password.length < 6)                || hasErr;
+      // Address: not empty
+      hasErr = setErr('address',  address === '')                     || hasErr;
+
+      if (!hasErr) {
+        document.getElementById('form-section').style.display = 'none';
+        document.getElementById('success').classList.add('show');
+      }
+    }
+
+    function reset() {
+      ['fname','lname','email','mobile','password','address'].forEach(id => {
+        const input = document.getElementById(id);
+        input.value = '';
+        input.classList.remove('ok','bad');
+        document.getElementById('err-' + id).classList.remove('show');
+      });
+      document.getElementById('form-section').style.display = 'block';
+      document.getElementById('success').classList.remove('show');
+    }
+  </script>
+
+</body>
+</html>
